@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoWellness Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Header -->
+      <header class="app-header">
+        <div class="logo">
+          <img
+            src="../assets/icon/cursor.png"
+            alt="EcoWellness Logo"
+            class="logo-image"
+          />
+          EcoWellness
+        </div>
+        <div class="user-level" id="userLevel">Level 1 Eco Explorer</div>
+      </header>
+
+      <!-- Environmental Impact Section -->
+      <section class="eco-section">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          "
+        >
+          <h3 style="margin: 0">Environmental Impact</h3>
+          <a
+            href="https://github.com/Atharva082004/EcoWellness-Extension.git"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <img
+              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              alt="GitHub Logo"
+              width="24"
+              height="24"
+              style="vertical-align: middle"
+            />
+          </a>
+        </div>
+
+        <div class="carbon-display">
+          <div class="carbon-meter">
+            <svg class="progress-ring" width="120" height="120">
+              <circle class="progress-ring-bg" cx="50" cy="50" r="40"></circle>
+              <circle
+                class="progress-ring-circle"
+                id="carbonProgress"
+                cx="50"
+                cy="50"
+                r="40"
+              ></circle>
+            </svg>
+            <div class="carbon-content">
+              <div class="carbon-value" id="carbonValue">0g CO₂</div>
+              <div class="carbon-target" id="carbonTarget">Target: 50g</div>
+            </div>
+          </div>
+          <div class="daily-stats">
+            <div class="stat-item">
+              <span class="stat-value" id="sitesVisited">0</span>
+              <span class="stat-label">Sites Visited</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value" id="browseTime">0h 0m</span>
+              <span class="stat-label">Browse Time</span>
+            </div>
+          </div>
+        </div>
+        <div class="eco-recommendations">
+          <button class="recommendation-btn" id="getEcoTip">
+            💡 Get Eco Tip
+          </button>
+          <div class="recommendation-text" id="ecoTipText"></div>
+        </div>
+      </section>
+
+      <!-- Digital Wellness Section -->
+      <section class="wellness-section">
+        <h3>💚 Digital Wellness</h3>
+        <div class="wellness-stats">
+          <div class="screen-time">
+            <span class="time-value" id="screenTimeValue">0h 0m</span>
+            <span class="time-label">Screen Time Today</span>
+          </div>
+          <div class="break-status">
+            <div class="break-timer" id="breakTimer">Next break in: 20m</div>
+            <div class="break-score">
+              Break Score: <span id="breakScore">10</span>/10
+              <div class="score-bar">
+                <div
+                  class="score-fill"
+                  id="scoreFill"
+                  style="width: 100%"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wellness-actions">
+          <button class="break-now-btn" id="takeBreakNow">
+            🧘 Take Break Now
+          </button>
+          <button class="wellness-tip-btn" id="getWellnessTip">
+            💡 Wellness Tip
+          </button>
+        </div>
+        <div class="wellness-tip-text" id="wellnessTipText"></div>
+      </section>
+
+      <!-- Achievements Section -->
+      <section class="achievements-section">
+        <h3>🏆 Today's Progress</h3>
+        <div class="achievement-grid" id="achievementGrid">
+          <!-- Achievements will be populated by JavaScript -->
+        </div>
+      </section>
+
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <button class="action-btn" id="settingsBtn">⚙️ Settings</button>
+        <button class="action-btn" id="reportBtn">📊 Weekly Report</button>
+        <button class="action-btn" id="shareBtn">📤 Share Progress</button>
+      </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal-overlay" id="settingsModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>⚙️ Settings</h3>
+          <button class="close-btn" id="closeSettings">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="setting-item">
+            <label>
+              <input type="checkbox" id="breakReminders" checked /> Enable break
+              reminders
+            </label>
+          </div>
+          <div class="setting-item">
+            <label for="carbonTargetInput">Daily Carbon Target (grams)</label>
+            <input
+              type="number"
+              id="carbonTargetInput"
+              value="50"
+              min="10"
+              max="200"
+            />
+          </div>
+          <div class="setting-item">
+            <label for="notificationStyle">Notification Style</label>
+            <select id="notificationStyle">
+              <option value="gentle">Gentle</option>
+              <option value="persistent">Persistent</option>
+              <option value="gamified">Gamified</option>
+            </select>
+          </div>
+          <div class="setting-item">
+            <label> <input type="checkbox" id="darkMode" /> Dark mode </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn primary" id="saveSettings">Save Settings</button>
+          <button class="btn secondary" id="exportData">Export Data</button>
+          <button class="btn danger" id="clearData">Clear All Data</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Weekly Report Modal -->
+    <div class="modal-overlay" id="reportModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>📊 Weekly Report</h3>
+          <button class="close-btn" id="closeReport">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="chart-container">
+            <canvas id="weeklyChart" width="350" height="200"></canvas>
+          </div>
+          <div class="report-stats" id="reportStats">
+            <!-- Stats will be populated by JavaScript -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Break Overlay -->
+    <div class="break-overlay hidden" id="breakOverlay">
+      <div class="break-content">
+        <h3 id="breakTitle">👀 Eye Break Time!</h3>
+        <p id="breakMessage">Look at something 20 feet away for 20 seconds</p>
+        <div class="break-timer-display">
+          <div class="timer-circle">
+            <span id="breakCountdown">20</span>
+          </div>
+        </div>
+        <div class="break-actions">
+          <button class="btn primary" id="startBreakTimer">Start Timer</button>
+          <button class="btn secondary" id="skipBreak">Skip</button>
+          <button class="btn secondary" id="postponeBreak">
+            Postpone 5min
+          </button>
+        </div>
+      </div>
+    </div>
+    <footer
+      style="text-align: center; margin-top: 20px; font-size: 12px; color: #666"
+    >
+      &copy; 2025 EcoWellness Extension. All rights reserved.
+    </footer>
+
+    <!-- Load utilities first -->
+    <script src="utils/carbon-calculator.js"></script>
+    <script src="utils/wellness-tracker.js"></script>
+    <!-- Load main popup script -->
+    <script src="popup.js"></script>
+  </body>
+</html>
