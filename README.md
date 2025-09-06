@@ -53,7 +53,7 @@ Tracks your environmental digital impact while promoting better screen time habi
 
 This is the folder layout for the EcoWellness Chrome extension:
 
-ECOWELLNESS/               
+```ECOWELLNESS/               
 ├─ assets/
 │  └─ icon/
 │     └─ cursor.png           # Custom icon files
@@ -74,7 +74,7 @@ ECOWELLNESS/
 ├─ LICENSE                    # Licensing information
 ├─ manifest.json              # Chrome extension manifest
 └─ README.md                  # Documentation
-
+```
 
 ## Development & Running
 
